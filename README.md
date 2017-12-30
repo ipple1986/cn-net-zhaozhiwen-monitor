@@ -1,20 +1,22 @@
-目录：
-一，saasWeb植入监控：
-二，jkbWeb或phoneinfWeb植入监控
-三，openapi植入监控
+<目录：
+* 一，saasWeb植入监控：
+* 二，jkbWeb或phoneinfWeb植入监控
+* 三，openapi植入监控
 
 
 
-=================================================邪恶的分割线=======================================================
-一，SaasWeb植入监控：
-1.pom.xml加入依赖
+< =================================================邪恶的分割线=======================================================
+# 一，SaasWeb植入监控：
+### 1.pom.xml加入依赖
+```
 	<dependency>
 		<groupId>cn.jufuns.saas.monitor</groupId>
 		<artifactId>cn-jufuns-saas-monitor</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
- 
- 2.修改web.xml 
+```
+### 2.修改web.xml 
+```
 将web.xml中
 	<filter>
 		<filter-name>Struts2</filter-name>
@@ -25,9 +27,10 @@
 		<filter-name>Struts2</filter-name>
 		<filter-class>cn.jufuns.saasx.monitor.integration.xworkstruts.filter.MonitorStrutsPrepareAndExecuteFilter</filter-class>
 	</filter>
-	
- 3.往spring容器内加入实现BasicInfoLoggable接口或MonitorHandler接口的bean
- 编写拦截业务类，代码如下
+```	
+### 3.往spring容器内加入实现BasicInfoLoggable接口或MonitorHandler接口的bean
+```
+编写拦截业务类，代码如下
 
 package cn.jufuns.struts2.filter;
 
@@ -94,24 +97,30 @@ public class SaasWebMonitorHandler implements MonitorHandler {
 		void intercept(ListableBeanFactory beanFactory, HttpServletRequest request, HttpServletResponse response);
 	}
 }
-
-4.最后将业务类注入Spring容器中
+```
+### 4.最后将业务类注入Spring容器中
+```
 在applicationContext.xml内加入以下代码 
 <bean class="cn.jufuns.struts2.filter.SaasWebMonitorHandler"/>
 
-=================================================邪恶的分割线=======================================================
+```
+< =================================================邪恶的分割线=======================================================
 
-二，jkbWeb或phoneinfWeb植入监控
-1.pom.xml加入依赖
+# 二，jkbWeb或phoneinfWeb植入监控
+### 1.pom.xml加入依赖
+```
 	<dependency>
 		<groupId>cn.jufuns.saas.monitor</groupId>
 		<artifactId>cn-jufuns-saas-monitor</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
-2.往Spring容器内（spring-mvc.xml）加入如下代码
+```
+### 2.往Spring容器内（spring-mvc.xml）加入如下代码
+```
 <bean class="cn.jufuns.saasx.monitor.integration.springmvc.MonitorBeanFactoryPostProcessor"/>
-
-3.编写实现MonitorHandler接口的bean,样例代码如下
+```
+### 3.编写实现MonitorHandler接口的bean,样例代码如下
+```
 package cn.jufuns.jkb.web.utils;
 
 import java.util.Arrays;
@@ -136,13 +145,17 @@ public class MyMonitorHandler implements MonitorHandler {
 	 
 	}
 }
-4.最后注入spring容器（spring-mvc.xml）中
+```
+###  4.最后注入spring容器（spring-mvc.xml）中
+```
 <bean class="cn.jufuns.jkb.web.utils.MyMonitorHandler" />
-	
-=================================================邪恶的分割线=======================================================
+```
 
-三，openapi植入监控
-1.在SpringMVCConfigration组件类上注解@EnableMonitor
+< =================================================邪恶的分割线=======================================================
+
+# 三，openapi植入监控
+## 1.在SpringMVCConfigration组件类上注解@EnableMonitor
+```
 package cn.jufuns.core.configuration;
 ......
 
@@ -168,8 +181,9 @@ public class MyMonitorHandler implements MonitorHandler {
 		// TODO Auto-generated method stub
 	}
 }
-
-2.将上面的类注入容器中
+```
+### 2.将上面的类注入容器中
+```
 package cn.jufuns.saas.schedule;
 
 import org.springframework.context.annotation.Bean;
@@ -192,3 +206,4 @@ public class ScheduleConfiguration {
 	
 	
 }
+```
